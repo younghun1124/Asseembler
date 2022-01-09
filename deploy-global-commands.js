@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const token = process.env.DISCORD_TOKEN;
 
-const { clientId, guildId } = require('./config.json');
+const { clientId } = require('./config.json');
 
 const commands = [];
 const commandFiles = fs
@@ -21,13 +21,17 @@ const rest = new REST({ version: '9' }).setToken(token);
 
 (async () => {
 	try {
-		console.log('Started refreshing application (/) commands.');
+		console.log(
+			'Started refreshing application (/) commands to global server. ',
+		);
 
-		await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+		await rest.put(Routes.applicationCommands(clientId), {
 			body: commands,
 		});
 
-		console.log('Successfully reloaded application (/) commands.');
+		console.log(
+			'Successfully reloaded application (/) commands. It will take up to an hour to update.',
+		);
 	} catch (error) {
 		console.error(error);
 	}

@@ -1,26 +1,56 @@
-const { Client, Intents } = require('discord.js');
+const fs = require('fs');
+const { Client, Collection, Intents } = require('discord.js');
+
 require('dotenv').config();
 const token = process.env.DISCORD_TOKEN;
+
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-// When the client is ready, run this code (only once)
-client.once('ready', () => {
-	console.log('Ready!');
-});
+client.commands = new Collection();
+const commandFiles = fs
+	.readdirSync('./commands')
+	.filter((file) => file.endsWith('.js'));
 
-client.on('interactionCreate', async (interaction) => {
-	if (!interaction.isCommand()) return;
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.commands.set(command.data.name, command);
+}
 
-	const { commandName } = interaction;
+const eventFiles = fs
+	.readdirSync('./events')
+	.filter((file) => file.endsWith('.js'));
 
-	if (commandName === 'ping') {
-		await interaction.reply('Pong!');
-	} else if (commandName === 'server') {
-		await interaction.reply('Server info.');
-	} else if (commandName === 'user') {
-		await interaction.reply('User info.');
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(client, ...args));
 	}
-});
+}
+
+// When the client is ready, run this code (only once)
+// client.once('ready', () => {
+// 	console.log('Ready!');
+// });
+
+// client.on('interactionCreate', async (interaction) => {
+// 	if (!interaction.isCommand()) return;
+
+// 	const command = client.commands.get(interaction.commandName);
+
+// 	try {
+// 		await command.execute(interaction);
+// 	} catch (error) {
+// 		console.error(error);
+// 		await interaction.reply({
+// 			content: 'There was an error while executing this command!',
+// 			ephemeral: true,
+// 		});
+// 	}
+// });
 // Login to Discord with your client's token
 client.login(token);

@@ -25,18 +25,18 @@ module.exports = {
 				.setLabel('하면 하지~')
 				.setStyle('PRIMARY'),
 		);
+
 		const embed = new MessageEmbed()
 			.setColor('#0099ff')
-			.setTitle('Some title')
-			.setURL('https://discord.js.org')
-			.setDescription('Some description here');
+			.setTitle('목록')
+			.setDescription(`${interaction.user.username}\n`);
 
 		const game = interaction.options.getString('할것');
 		const number = interaction.options.getInteger('인원수');
 		console.log(interaction);
 		return interaction.reply({
 			content: `${interaction.user.username}님이 ${game}할 ${number}명을 찾아요`,
-			embed: [embed],
+			embeds: [embed],
 			components: [row],
 			ephemeral: false,
 		});

@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
@@ -14,25 +16,16 @@ module.exports = {
 				});
 			}
 		} else if (interaction.isButton()) {
+			const recentEmbed = interaction.message.embeds[0].description;
+			console.log('\nCONSOLE HERE!\nㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n');
 			console.log(interaction);
-			const filter = (i) => i.customId === 'primary';
-			const collector =
-				interaction.channel.createMessageComponentCollector({
-					filter,
-					time: 15000,
-				});
-			collector.on('collect', async (i) => {
-				if (i.customId === 'primary') {
-					await i.reply({
-						content: 'A button was clicked!',
-						ephemeral: true,
-					});
-				}
+			const embed = new MessageEmbed()
+				.setColor('#0099ff')
+				.setTitle('대기 중..(1/5)')
+				.setDescription(`${recentEmbed}\n<@${interaction.user.id}>\n`);
+			interaction.update({
+				embeds: [embed],
 			});
-
-			collector.on('end', (collected) =>
-				console.log(`Collected ${collected.size} items`),
-			);
 		} else {
 			return;
 		}

@@ -24,7 +24,7 @@ module.exports = {
 
 		const row = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId('primary')
+				.setCustomId('join')
 				.setLabel('하면 하지~')
 				.setStyle('PRIMARY'),
 		);
@@ -36,7 +36,7 @@ module.exports = {
 
 		console.log(interaction);
 		return interaction.reply({
-			content: `${interaction.user.username}님이 ${game}할 ${number}명을 찾아요`,
+			content: `${interaction.user.username}님이 ${game}할 ${number}명을 찾아요.`,
 			embeds: [embed],
 			components: [row],
 			ephemeral: false,

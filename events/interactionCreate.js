@@ -1,3 +1,5 @@
+const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
@@ -14,25 +16,13 @@ module.exports = {
 				});
 			}
 		} else if (interaction.isButton()) {
-			console.log(interaction);
-			const filter = (i) => i.customId === 'primary';
-			const collector =
-				interaction.channel.createMessageComponentCollector({
-					filter,
-					time: 15000,
-				});
-			collector.on('collect', async (i) => {
-				if (i.customId === 'primary') {
-					await i.reply({
-						content: 'A button was clicked!',
-						ephemeral: true,
-					});
-				}
-			});
-
-			collector.on('end', (collected) =>
-				console.log(`Collected ${collected.size} items`),
-			);
+			if (interaction.customId === 'join') {
+				const join = require('./interactionCreate/join');
+				join.execute(interaction);
+			} else if (interaction.customId === 'listExit') {
+				const listExit = require('./interactionCreate/listExit');
+				listExit.execute(interaction);
+			}
 		} else {
 			return;
 		}

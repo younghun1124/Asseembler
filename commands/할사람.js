@@ -19,23 +19,24 @@ module.exports = {
 				.setRequired(true),
 		),
 	async execute(interaction) {
+		const game = interaction.options.getString('할것');
+		const number = interaction.options.getInteger('인원수');
+
 		const row = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId('primary')
+				.setCustomId('join')
 				.setLabel('하면 하지~')
 				.setStyle('PRIMARY'),
 		);
 
 		const embed = new MessageEmbed()
 			.setColor('#0099ff')
-			.setTitle('목록')
-			.setDescription(`${interaction.user.username}\n`);
+			.setTitle(`대기 중..(1/${number})`)
+			.setDescription(`<@${interaction.user.id}>\n`);
 
-		const game = interaction.options.getString('할것');
-		const number = interaction.options.getInteger('인원수');
 		console.log(interaction);
 		return interaction.reply({
-			content: `${interaction.user.username}님이 ${game}할 ${number}명을 찾아요`,
+			content: `${interaction.user.username}님이 ${game}할 ${number}명을 찾아요.`,
 			embeds: [embed],
 			components: [row],
 			ephemeral: false,

@@ -17,8 +17,8 @@ module.exports = {
 			}
 		} else if (interaction.isButton()) {
 			if (interaction.customId === 'join') {
-				const join = require('./interactionCreate/join');
-				join.execute(interaction);
+				const listJoin = require('./interactionCreate/listJoin');
+				listJoin.execute(interaction);
 			} else if (interaction.customId === 'listExit') {
 				const listExit = require('./interactionCreate/listExit');
 				listExit.execute(interaction);

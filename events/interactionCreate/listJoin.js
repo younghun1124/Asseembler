@@ -8,10 +8,8 @@ module.exports = {
 
 			const maxNum = recentEmbed.title.split('/')[1];
 
-			console.log('\nCONSOLE HERE!\nㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n');
-			console.log(interaction);
 			const list = new List(recentEmbed.description, maxNum);
-			list.join(`<@${interaction.user.id}>`);
+			list.join(interaction.user.id);
 
 			const embed = new MessageEmbed()
 				.setColor('#0099ff')

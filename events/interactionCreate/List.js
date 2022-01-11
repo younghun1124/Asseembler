@@ -20,8 +20,11 @@ module.exports = class List {
 		this.countMember();
 	}
 	printMembersAsMention() {
+		if (this.member.size === 0) {
+			return null;
+		}
 		const reducer = (previousValue, currentValue) =>
-			`${previousValue}\n${currentValue}>`;
-		return [...this.member].reduce(reducer);
+			`${previousValue}\n${currentValue}`;
+		return [...this.member].reduce(reducer).toString();
 	}
 };

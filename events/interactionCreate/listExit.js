@@ -12,11 +12,13 @@ module.exports = {
 			const list = new List(rootMsg.embeds[0].description);
 			list.exit(interaction.user.id);
 			// console.log('리스트입니다' + list);
-			console.log(list.printMembersAsMention());
+
 			const embed = new MessageEmbed()
 				.setColor('#0099ff')
 				.setTitle(`${list.count}명 대기중..`)
-				.setDescription(list.printMembersAsMention().toString());
+				.setDescription(
+					list.printMembersAsMention() || '그리고아무도없었다',
+				);
 
 			await rootMsg.edit({ embeds: [embed] });
 			await interaction.update({

@@ -31,7 +31,7 @@ module.exports = {
 
 		const embed = new MessageEmbed()
 			.setColor('#0099ff')
-			.setTitle(`대기 중..(1/${number})`)
+			.setTitle('1명 대기중..')
 			.setDescription(`<@${interaction.user.id}>\n`);
 
 		console.log(interaction);

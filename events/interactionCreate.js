@@ -1,5 +1,3 @@
-const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
-
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
@@ -11,14 +9,14 @@ module.exports = {
 			} catch (error) {
 				console.error(error);
 				await interaction.reply({
-					content: 'There was an error while executing this command!',
+					content: '명령 수행중 오류가 발생했어요!',
 					ephemeral: true,
 				});
 			}
 		} else if (interaction.isButton()) {
 			if (interaction.customId === 'join') {
 				const listJoin = require('./interactionCreate/listJoin');
-				listJoin.execute(interaction);
+				listJoin.execute(interaction, client);
 			} else if (interaction.customId === 'listExit') {
 				const listExit = require('./interactionCreate/listExit');
 				listExit.execute(interaction);

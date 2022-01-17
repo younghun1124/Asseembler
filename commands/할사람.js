@@ -34,7 +34,7 @@ module.exports = {
 			.setTitle('1명 대기중..')
 			.setDescription(`<@${interaction.user.id}>\n`);
 
-		console.log(interaction);
+		console.log(interaction.options);
 		return interaction.reply({
 			content: `${interaction.user.username}님이 ${game}할 ${number}명을 찾아요.`,
 			embeds: [embed],
